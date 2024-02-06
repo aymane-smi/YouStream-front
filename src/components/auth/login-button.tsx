@@ -41,8 +41,8 @@ export const LoginButton = ()=>{
         e.preventDefault();
     };
     return (<Dialog>
-        <DialogTrigger asChild className="absolute right-0">
-          <Button variant="outline">Se connecter</Button>
+        <DialogTrigger asChild>
+          <Button className="bg-[#2F2F35] w-fit p-1 rounded-sm text-white font-semibold text-[12px]">Se connecter</Button>
         </DialogTrigger>
         <DialogContent className="bg-[#18181B] flex flex-col justify-center items-center">
           <DialogHeader className="flex flex-row justify-center items-center gap-2">
