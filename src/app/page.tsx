@@ -4,9 +4,6 @@ config.autoAddCss = false
 
 export default function Home() {
   return (
-    <>
-      
-    </>
-    
+    <></>
   )
 }
