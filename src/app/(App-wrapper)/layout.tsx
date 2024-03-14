@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ['latin'] })
 const queryClient = new QueryClient();
 
 import { ThemeProvider } from "@/components/theme-provider"
-import { Sidebar } from '@/components/shared/Sidebar';
+import { Sidebar } from '@/components/shared/SideBar/Sidebar';
 export default function RootLayout({ children }: any) {
   return (
       <html lang="en" suppressHydrationWarning>
