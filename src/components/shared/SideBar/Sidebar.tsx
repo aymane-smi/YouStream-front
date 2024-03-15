@@ -8,7 +8,7 @@ import Link from 'next/link';
 
 export const Sidebar = ()=>{
     const {isLoading, isError, data} = useQuery("getStudents", apis.student.getStudent);
-    return <div className="max-w-[200px] h-[calc(100vh-70px)] bg-[#1F1F23] flex-1 flex flex-col justify-start items-center overflow-y-scroll hide-scroll">
+    return <div className="max-w-[200px] h-[calc(100vh-70px)] bg-[#1F1F23] flex flex-col justify-start items-center overflow-y-scroll hide-scroll">
         <p className="font-bold text-[11px] p-3">RECOMMENDED STREAMERS</p>
         {/* loading skeleton */}
         {isLoading && [...Array(7)].map((i)=>{
