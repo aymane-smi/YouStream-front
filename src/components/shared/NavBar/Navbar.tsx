@@ -1,11 +1,11 @@
 import Image from "next/image"
-import { LoginButton } from "../auth/login-button"
-import { PopOver } from "../costum/popover"
+import { LoginButton } from "../../auth/login-button"
+import { PopOver } from "../../costum/popover"
 import apis from "@/utils/API"
 
 export const Navbar = ()=>{
     return <header className="max-w-screen h-[70px] bg-[#18181B] flex justify-between items-center px-2 shadow-lg z-[999]">
-                <div className="flex justify-center items-center">
+                <div className="flex justify-center items-center gap-4">
                   <Image 
                     src="/icon.png"
                     width={40}
@@ -14,8 +14,8 @@ export const Navbar = ()=>{
                   />
                   <Image 
                     src="/youstream.png"
-                    width={200}
-                    height={180} 
+                    width={180}
+                    height={160} 
                     alt={'youstream image'}
                   />
                 </div>

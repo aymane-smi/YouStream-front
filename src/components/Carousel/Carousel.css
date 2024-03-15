@@ -1,4 +1,4 @@
-/* .twitch .twitch-button {
+.twitch .twitch-button {
     position: absolute;
     top: 43%;
     box-shadow: none;
@@ -9,7 +9,7 @@
   }
   .twitch .twitch-button.right {
     right: 0%;
-  } */
+  }
   .react-stacked-center-carousel {
     padding: 20px 0;
   }
@@ -68,10 +68,10 @@
     transition: opacity 300ms ease, z-index 0ms 300ms;
   }
   
-  .twitch-card .cover.on {
+  /* .twitch-card .cover.on {
     opacity: 1;
     z-index: 1;
-  }
+  } */
   
   .twitch-card .cover.off {
     opacity: 0;

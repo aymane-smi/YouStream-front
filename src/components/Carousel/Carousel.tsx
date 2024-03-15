@@ -2,13 +2,21 @@
 import React from 'react';
 import { StackedCarousel, ResponsiveContainer, StackedCarouselSlideProps, ResponsiveContainerProps } from 'react-stacked-center-carousel';
 import "./Carousel.css";
-const data = new Array(10).fill({ coverImage: "xxx", video: "xxx" })
+import { useQuery } from 'react-query';
+import apis from '@/utils/API';
+import { Skeleton } from '../ui/skeleton';
+import ReactPlayer from "react-player";
+const loader = new Array(10);
 
 export function ResponsiveCarousel() {
     const ref = React.useRef<StackedCarousel>();
+    const {data, isLoading} = useQuery("topStreams", apis.stream.topStream);
+    data?.data.forEach((stream, index)=>{
+      loader[index] = stream;
+    });
     return (
       <div style={{ width: '100%', position: 'relative' }}>
-          <ResponsiveContainer
+          {isLoading ? <Skeleton className='W-[750px] h-[200px]'/> : <ResponsiveContainer
               carouselRef={ref}
               render={(width, carouselRef) => {
                 return (
@@ -17,7 +25,7 @@ export function ResponsiveCarousel() {
                       slideComponent={Slide}
                       slideWidth={750}
                       carouselWidth={width}
-                      data={data}
+                      data={loader}
                       maxVisibleSlide={5}
                       disableSwipe
                       customScales={[1, 0.85, 0.7, 0.55]}
@@ -25,7 +33,8 @@ export function ResponsiveCarousel() {
                   />
                 );
               }}
-          />
+          />}
+          
       </div>
     );
 }
@@ -50,8 +59,6 @@ const Slide = React.memo(function (props: StackedCarouselSlideProps) {
       clearTimeout(loadDelay);
     });
 
-    const { coverImage, video } = data[dataIndex];
-
     return (
       <div className='twitch-card' draggable={false}>
         <div className={`cover fill ${isCenterSlide && loaded ? 'off' : 'on'}`}>
@@ -61,12 +68,16 @@ const Slide = React.memo(function (props: StackedCarouselSlideProps) {
               if (!isCenterSlide) swipeTo(slideIndex);
             }}
           />
-          <img className='cover-image fill' src={coverImage} />
+          <img className='cover-image fill' src="https://img.freepik.com/premium-vector/no-signal-old-tv-screen_268834-925.jpg?w=360" />
         </div>
         {loaded && (
           <div className='detail fill'>
-            <img className='video' src={video} />
-            <div>x</div>
+            {data[dataIndex] == undefined ? <p className='text-black'></p> : <ReactPlayer url="https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8" playing={true} config={{
+              file:{
+                forceHLS: true,
+                forceSafariHLS: true
+              }
+            }}/>}
           </div>
         )}
       </div>

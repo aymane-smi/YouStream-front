@@ -2,7 +2,7 @@
 import { Inter } from 'next/font/google'
 import { QueryClientProvider, QueryClient } from "react-query";
 import './globals.css'
-import { Navbar } from '@/components/shared/Navbar';
+import { Navbar } from '@/components/shared/NavBar/Navbar';
 
 const inter = Inter({ subsets: ['latin'] })
 const queryClient = new QueryClient();
