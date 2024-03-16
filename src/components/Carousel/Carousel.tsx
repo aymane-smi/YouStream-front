@@ -6,6 +6,10 @@ import { useQuery } from 'react-query';
 import apis from '@/utils/API';
 import { Skeleton } from '../ui/skeleton';
 import ReactPlayer from "react-player";
+import { HashLoader } from 'react-spinners';
+import { FaPlayCircle } from "react-icons/fa";
+import Link from 'next/link';
+
 const loader = new Array(10);
 
 export function ResponsiveCarousel() {
@@ -15,7 +19,7 @@ export function ResponsiveCarousel() {
       loader[index] = stream;
     });
     return (
-      <div style={{ width: '100%', position: 'relative' }}>
+      <div style={{ width: '100%', position: 'relative'}}>
           {isLoading ? <Skeleton className='W-[750px] h-[200px]'/> : <ResponsiveContainer
               carouselRef={ref}
               render={(width, carouselRef) => {
@@ -68,16 +72,27 @@ const Slide = React.memo(function (props: StackedCarouselSlideProps) {
               if (!isCenterSlide) swipeTo(slideIndex);
             }}
           />
-          <img className='cover-image fill' src="https://img.freepik.com/premium-vector/no-signal-old-tv-screen_268834-925.jpg?w=360" />
+          {data[dataIndex] != undefined ? 
+              <div className='h-full w-full flex justify-center items-center bg-white'>
+                <HashLoader color="#8E4AFE" />
+              </div> : 
+              <img className='cover-image fill' src="https://img.freepik.com/premium-vector/no-signal-old-tv-screen_268834-925.jpg?w=360" />
+          }
+          
         </div>
         {loaded && (
           <div className='detail fill'>
-            {data[dataIndex] == undefined ? <p className='text-black'></p> : <ReactPlayer url="https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8" playing={true} config={{
-              file:{
-                forceHLS: true,
-                forceSafariHLS: true
-              }
-            }}/>}
+            {data[dataIndex] == undefined ? 
+              <img className='cover-image fill' src="https://img.freepik.com/premium-vector/no-signal-old-tv-screen_268834-925.jpg?w=360" />
+             : <Link href={`/stream/${data[dataIndex].id}`} className='w-full h-full'>
+                <ReactPlayer url="http://sample.vodobox.net/skate_phantom_flex_4k/skate_phantom_flex_4k.m3u8" controls={true} 
+                playing={false} 
+                playIcon={<FaPlayCircle size={50} color='black'/>}
+                light
+                width="100%"
+                height="100%"
+                />
+             </Link>}
           </div>
         )}
       </div>

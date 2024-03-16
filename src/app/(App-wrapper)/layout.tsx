@@ -16,7 +16,7 @@ export default function RootLayout({ children }: any) {
           <link rel="icon" href="./icon.png"/>
           <title>YouStream</title>
         </head>
-        <body>
+        <body className='hide-scroll'>
           <QueryClientProvider client={queryClient}>
             <ThemeProvider
               attribute="class"

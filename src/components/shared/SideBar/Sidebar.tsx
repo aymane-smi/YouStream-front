@@ -21,7 +21,7 @@ export const Sidebar = ()=>{
         <div className="flex flex-col justify-start items-center">
             {data && data.data.map((student, index)=>{
                 const fullName = student.firstName + " " +student.lastName; 
-                return <Link href={`/streamer/${student.id}`} className='flex justify-center items-center gap-3' title={student.username} key={index}>
+                return <Link href={`/streamer/${student.id}`} className='flex justify-center items-center gap-3' title={student.username} key={`streamer_${index}`}>
                     <Avatar className="w-[30px] h-[30px] my-3" {...config}/>
                     <p>{fullName.length > 10 ? fullName.slice(10)+"..." : fullName}</p>
                 </Link>
