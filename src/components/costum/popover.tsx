@@ -13,6 +13,7 @@ import { Switch } from "../ui/switch";
 import { log } from "console";
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
+import Link from "next/link";
 
 export function PopOver() {
     const [value, setValue] = useState<boolean>(false);
@@ -36,12 +37,16 @@ export function PopOver() {
         />
         </button>
       </PopoverTrigger>
-      <PopoverContent className="w-fit flex gap-2 justify-center items-center">
-        <label htmlFor="theme mode" className={theme === "dark" ? "text-white" : "text-black"}>switch theme mode</label>
-        <Switch style={{
-            width: "40px",
-            height: "20px"
-        }} id="theme mode" onCheckedChange={setValue} checked={value}/>
+      <PopoverContent className="w-fit flex flex-col gap-2 justify-center items-center">
+        <div className="flex gap-2 justify-center items-center">
+          <label htmlFor="theme mode" className={theme === "dark" ? "text-white" : "text-black"}>switch theme mode</label>
+          <Switch style={{
+              width: "40px",
+              height: "20px"
+          }} id="theme mode" onCheckedChange={setValue} checked={value}/>
+        </div>
+        <Link href="/account">Account</Link>
+        <button>logout</button>
       </PopoverContent>
     </Popover>
   )
