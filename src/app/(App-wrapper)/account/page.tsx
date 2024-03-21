@@ -1,7 +1,11 @@
+"use client"
 import Link from "next/link";
 import { FaPen } from "react-icons/fa";
+import { jwtDecode } from "jwt-decode";
+import { EditStudent } from "@/components/edit/editStudent";
 
 export default function Account(){
+   const {sub} = jwtDecode(localStorage.getItem("token") as string);
     return <main className="p-6 w-full">
         <p className="text-[40px] font-bold">Settings</p>
         <div className="flex flex-col items-start justify-center gap-4 mt-4 w-full">
@@ -12,20 +16,16 @@ export default function Account(){
                 <div className="flex justify-between items-center p-4 border-b border-white pb-6">
                     <p>username</p>
                     <div className="flex w-[70%]">
-                        <input disabled placeholder="username" className="border-[0.5px] rounded-r-none px-4 py-1 rounded border-white w-full border-r-0 bg-[#28282C]" data-testid="username_input"/>
-                        <button className="px-2 py-1 border-[0.5px] rounded-md rounded-l-none border-white border-l-0 flex justify-center items-center" color="red">
-                            <FaPen size={15} />
-                        </button>
+                        <input type="password" disabled placeholder={sub} className="border-[0.5px] rounded-r-none px-4 py-1 rounded border-white w-full border-r-0 bg-[#28282C]" data-testid="username_input"/>
+                        <EditStudent option={1} value={sub as string}/>
                     </div>
                 </div>
                 {/* password edit */}
                 <div className="flex justify-between items-center p-4 pb-6 border-b border-white">
-                    <p>username</p>
+                    <p>password</p>
                     <div className="flex w-[70%]">
                         <input disabled placeholder="password" className="border-[0.5px] rounded-r-none px-4 py-1 rounded border-white w-full border-r-0 bg-[#28282C]" data-testid="password_input" />
-                        <button className="px-2 py-1 border-[0.5px] rounded-md rounded-l-none border-white border-l-0 flex justify-center items-center" color="red">
-                            <FaPen size={15} />
-                        </button>
+                        <EditStudent option={2}/>
                     </div>
                 </div>
                 {/* back button */}

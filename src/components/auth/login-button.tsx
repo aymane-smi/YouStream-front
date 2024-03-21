@@ -35,7 +35,7 @@ export const LoginButton = ()=>{
     const onSubmit: SubmitHandler<userLogin> = (data)=>{
         signinMutation.mutate(data);
     }
-    return (<Dialog open={open}>
+    return (<Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           <Button className="bg-[#2F2F35] w-fit p-1 rounded-sm text-white font-semibold text-[12px]" onClick={()=>setOpen(true)}>Se connecter</Button>
         </DialogTrigger>

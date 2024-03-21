@@ -1,6 +1,6 @@
-import { SignIn as signIn, SignUp as signUp, isAuthenticated} from "./auth";
+import { SignIn as signIn, SignUp as signUp, isAuthenticated, } from "./auth";
 import { getInfiniteStreams, getTopStream, getStreamById } from "./stream";
-import {getStudent} from "./student";
+import {getStudent, editUsername, editPassword} from "./student";
 export const API = "http://localhost:8080/api/";
 
 const apis = {
@@ -10,7 +10,9 @@ const apis = {
         isAuthenticated
     },
     student: {
-        getStudent
+        getStudent,
+        editUsername,
+        editPassword
     },
     stream:{
         topStream: getTopStream,
