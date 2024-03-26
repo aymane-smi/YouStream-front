@@ -1,3 +1,5 @@
-export interface SubscriberDTO{
-    streamerId: Number
+export interface SubscriberDTO {
+    id:Number,
+    streamerId: Number,
+    subscriberId: Number
 }

@@ -1,5 +1,3 @@
-export interface SubscriberRDTO {
-    id:Number,
-    streamerId: Number,
-    subscriberId: Number
+export interface SubscriberRDTO{
+    streamerId: Number
 }

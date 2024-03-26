@@ -3,7 +3,7 @@ import ReactPlayer from "react-player";
 import Avatar from "react-nice-avatar";
 import { IoPersonOutline } from "react-icons/io5";
 import { MdOutlineReportGmailerrorred } from "react-icons/md";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { useParams } from "next/navigation";
 import { useMutation, useQuery } from "react-query";
@@ -17,6 +17,11 @@ export default function StreamId(){
     const {data, isLoading, } = useQuery("getStreamById", {
         queryFn: ()=>apis.stream.getStreamById(Number.parseInt(id))
     });
+    const loggedId = localStorage.getItem("id");
+    useEffect(()=>{
+        if(loggedId == data?.data.owner?.id)
+            setDisabled(true);
+    }, [data]);
     const followMutation = useMutation("follow", apis.student.subscribe, {
         onSuccess: (data)=>{
             setDisabled(true);
@@ -50,7 +55,7 @@ export default function StreamId(){
                         <IoPersonOutline size={20}/>
                         <span>Follow</span>
                     </button>
-                    <button className="rounded-md p-2 font-semibold bg-[#1F1F23] flex gap-2 justify-center items-center">
+                    <button className={`rounded-md p-2 font-semibold bg-[#1F1F23] flex gap-2 justify-center items-center ${disabled && "cursor-not-allowed"}`}>
                         <MdOutlineReportGmailerrorred size={20}/>
                         <span>Report stream</span>
                     </button>
