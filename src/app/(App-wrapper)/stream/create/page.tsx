@@ -1,5 +1,6 @@
 "use client"
 import { Badge } from "@/components/ui/badge";
+import Modal from "react-modal";
 import { DialogFooter, DialogHeader } from "@/components/ui/dialog";
 import {
     Drawer,
@@ -19,12 +20,14 @@ import { useMutation } from "react-query";
 import { ScaleLoader } from "react-spinners";
 import { toast } from "react-toastify";
 import {v4 as uuidv4} from "uuid";
+import { useRouter } from "next/navigation";
 
 export default function CreateStream(){
     const [tags, setTags] = useState<TagDTO[]>([]);
     const [refreshLoading, setRefreshLoading] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const mutation = useMutation("ceateSteam", apis.stream.createStream);
+    const router = useRouter();
     const handleEnter = (e:KeyboardEvent<HTMLInputElement>)=>{
         if(e.key === "Enter" && ((e.target as HTMLInputElement).value as string) !== ""){
             const value = (e.target as HTMLInputElement)?.value; 
@@ -43,7 +46,10 @@ export default function CreateStream(){
         }
     },[mutation.error]);
     const onSend = async()=>{
-        await mutation.mutate(tags);
+        const {data} = await mutation.mutateAsync(tags);
+        console.log(data.streamToken);
+        await navigator.clipboard.writeText(data?.streamToken);
+        handleToast("stream created and the clipboard contain the stream id", "success");
     }
     const onEmpty = ()=>{
         setTags([]);
@@ -62,7 +68,11 @@ export default function CreateStream(){
         if(type === "error")
             toast.error(message);
         else if(type === "success")
-            toast.success(message);
+            toast.success(message, {
+                onClose: ()=>{
+                    router.push("/myStreams")
+                }
+            });
     }
     return <div className="rounded-red-500 flex justify-center items-center w-full">
         {refreshLoading ? <div className="w-full flex justify-center items-center flex-col gap-3">
