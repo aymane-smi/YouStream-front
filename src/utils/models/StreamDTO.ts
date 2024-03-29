@@ -1,9 +1,11 @@
+import { TagDTO } from "./TagDTO";
+
 export interface StreamDTO{
     id:Number,
     viewsNbr: Number,
     restricted: boolean,
     file_name: string,
-    tags: any[],
+    tags: TagDTO[],
     student: any,
     owner: any
 }
