@@ -11,6 +11,7 @@ import { useInfiniteQuery } from 'react-query'
 import {v4 as uuidv4} from "uuid";
 import Avatar from "react-nice-avatar";
 import { StreamTopDTO } from '@/utils/models/StreamTopDTO'
+import Link from 'next/link'
 config.autoAddCss = false
 
 export default function Home() {
@@ -43,6 +44,7 @@ export default function Home() {
 
       if (div) observer.current.observe(div);
   }, [fetchNextPage, hasNextPage, isFetching, isLoading]);
+  console.log(data);
   return (
     <main className="w-full max-w-calc[100vw-200px] overflow-y-scroll ml-[200px] max-h-[100vh-70px] hide-scroll">
       <ResponsiveCarousel />
@@ -62,7 +64,9 @@ export default function Home() {
                          height={150}
               />
             <div className='flex justify-start gap-3 items-center w-full'>
-              <Avatar className="w-[40px] h-[40px] rounded-[50%]" {...config}/>
+              <Link href={`/student/${localStorage.getItem("id")}`}>
+                <Avatar className="w-[40px] h-[40px] rounded-[50%]" {...config}/>
+              </Link>
               <div className='w-full flex flex-col gap-3'>
                 <p className='w-full h-[10px]'>Streamed by:{stream.username}</p>
                 <div className='w-full'>list of tags</div>

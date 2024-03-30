@@ -22,3 +22,7 @@ export const createStream = (tags:TagDTO[])=>{
         tags: tags
     });
 }
+
+export const getStudentStream = (id:number)=>{
+    return axiosInstance.get<StreamDTO[]>(`${API}stream/features/student/${id}`);
+}
