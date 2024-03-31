@@ -1,6 +1,7 @@
 import { SignIn as signIn, SignUp as signUp, isAuthenticated, refreshToken} from "./auth";
 import { getInfiniteStreams, getTopStream, getStreamById, createStream, getStudentStream } from "./stream";
 import {getStudent, editUsername, editPassword, subscribe} from "./student";
+import { getStrikes } from "./strike";
 export const API = "http://localhost:8080/api/";
 
 const apis = {
@@ -22,6 +23,9 @@ const apis = {
         getStreamById,
         createStream,
         getStudentStream
+    },
+    strike: {
+        getStrikes
     }
 }
 

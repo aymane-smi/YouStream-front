@@ -2,6 +2,10 @@
 import { AdminNav } from "@/components/shared/AdminNav/AdminNav"
 import { UserTable } from "./UserRows"
 import { UserColumns } from "./UserColumns"
+import { useQuery } from "react-query"
+import apis from "@/utils/API"
+import { ReportTable } from "@/components/table/report/ReportRows"
+import { ReportColumns } from "@/components/table/report/ReportColumns"
 
 export type Report = {}
 export type User = {
@@ -12,6 +16,10 @@ export type User = {
     isActive: boolean
 }
 export default function Dashboard(){
+    const {data, isLoading, error} = useQuery("getStrikes", {
+        queryFn: ()=>apis.strike.getStrikes()
+    });
+    console.log(data);
     return <>
         <AdminNav />
         <div className="flex flex-col w-full justify-center items-start p-6 gap-5">
@@ -27,13 +35,7 @@ export default function Dashboard(){
             </>
             <>
                 <p>List of reports</p>
-                <UserTable columns={UserColumns} data={[{
-                    id: 1,
-                    username: "aymane",
-                    firstName: "aymane",
-                    lastName: "belassiria",
-                    isActive: true
-                }]}/>
+                <ReportTable columns={ReportColumns} data={data?.data || []}/>
             </>
         </div>
     </>
