@@ -22,7 +22,7 @@ export const SignUp = async (student:userSignUp)=>{
 }
 
 export const isAuthenticated = ()=>{
-    return localStorage.getItem("token") == '' ? false : true;
+    return localStorage.getItem("token") ? true : false;
 }
 
 export const refreshToken = async ()=>{

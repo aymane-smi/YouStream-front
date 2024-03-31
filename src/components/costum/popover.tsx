@@ -17,6 +17,7 @@ import Link from "next/link";
 
 export function PopOver() {
     const [value, setValue] = useState<boolean>(false);
+    const [close, setClose] = useState<boolean>(false);
     const {setTheme, theme} = useTheme();
     useEffect(()=>{
         if(value)
@@ -24,8 +25,15 @@ export function PopOver() {
         else
             setTheme("dark");
     }, [value]);
+    const handleLogout = ()=>{
+      localStorage.removeItem("id");
+      localStorage.removeItem("token");
+      localStorage.removeItem("refresh_token");
+      localStorage.removeItem("role");
+      setClose(false);
+    }
   return (
-    <Popover>
+    <Popover open={close} onOpenChange={setClose}>
       <PopoverTrigger asChild>
         <button>
         <FontAwesomeIcon icon={faUser}
@@ -44,9 +52,14 @@ export function PopOver() {
               width: "40px",
               height: "20px"
           }} id="theme mode" onCheckedChange={setValue} checked={value}/>
-        </div>
-        <Link href="/account">Account</Link>
-        <button>logout</button>
+        </div>{
+          localStorage.getItem("token") && 
+          <>
+            <Link href="/account">Account</Link>
+            <Link href="/stream/create">Add stream</Link>
+            <button onClick={handleLogout}>logout</button>
+          </>
+        }
       </PopoverContent>
     </Popover>
   )
