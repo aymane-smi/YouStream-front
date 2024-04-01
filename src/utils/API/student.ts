@@ -35,3 +35,9 @@ export const subscribe = (subscriber:SubscriberRDTO)=>{
 export const getStudentInfo = ()=>{
     return axiosInstance.get<StudentInfoDTO>('student/all?userType=admin');
 }
+
+export const toggleActivation = (id:number)=>{
+    return axiosInstance.get<{
+        active: boolean
+    }>(`student/${id}/toggleActivation?userType=admin`);
+}

@@ -17,6 +17,8 @@ import {
 } from "@/components/ui/table"
 import { cn } from "@/lib/utils"
 import { toast } from "react-toastify"
+import { useQuery } from "react-query"
+import apis from "@/utils/API"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -36,6 +38,9 @@ export function UserTable<TData, TValue>({
   })
 
   const onChange = (id:number)=>{
+    apis.student.toggleActivation(id).then((res)=>{
+      console.log(res.data);
+    });
     const index = checks.findIndex((obj) => obj.id === id);
     const data = [...checks];
     if(index !== -1)
