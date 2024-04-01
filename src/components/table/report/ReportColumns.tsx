@@ -17,9 +17,5 @@ export const ReportColumns:ColumnDef<StrikeDTO>[] = [
     {
         accessorKey: "description",
         header: "Description"
-    },
-    {
-        accessorKey: "isActive",
-        header: "Active"
-    },
+    }
 ]

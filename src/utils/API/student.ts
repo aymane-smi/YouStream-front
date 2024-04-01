@@ -6,6 +6,7 @@ import { StudentEditUserDTO } from "../models/StudentEditUserDTO"
 import { StudentEditPwdDTO } from "../models/StudentEditPwdDTO"
 import { SubscriberDTO } from "../models/SubscriberDTO"
 import {SubscriberRDTO} from "../models/SubscriberRDTO";
+import { StudentInfoDTO } from "../models/StudentInfoDTO"
 
 export const getStudent = ()=>{
     return axios.get<StudentList[]>(`${API}student`, {
@@ -28,6 +29,9 @@ export const editPassword = (studentEditPwd:StudentEditPwdDTO)=>{
     }>(`student/editPassword?userType=student`, studentEditPwd);
 }
 export const subscribe = (subscriber:SubscriberRDTO)=>{
-    console.log(subscribe);
     return axiosInstance.post<SubscriberRDTO>('student/subscribe?userType=student', subscriber);
+}
+
+export const getStudentInfo = ()=>{
+    return axiosInstance.get<StudentInfoDTO>('student/all?userType=admin');
 }

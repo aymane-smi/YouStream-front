@@ -15,6 +15,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { cn } from "@/lib/utils"
+import { toast } from "react-toastify"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -24,12 +26,23 @@ interface DataTableProps<TData, TValue> {
 export function UserTable<TData, TValue>({
   columns,
   data,
+  checks,
+  setCheck
 }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
   })
+
+  const onChange = (id:number)=>{
+    const index = checks.findIndex((obj) => obj.id === id);
+    const data = [...checks];
+    if(index !== -1)
+      data[index].active = !data[index].active;
+    setCheck(data);
+    toast.success("user activation status is changed");
+  }
 
   return (
     <div className="rounded-md border w-full">
@@ -54,14 +67,19 @@ export function UserTable<TData, TValue>({
         </TableHeader>
         <TableBody>
           {table.getRowModel().rows?.length ? (
-            table.getRowModel().rows.map((row) => (
+            table.getRowModel().rows.map((row,i) => (
               <TableRow
                 key={row.id}
                 data-state={row.getIsSelected() && "selected"}
               >
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    {cell.column.columnDef.header === "Active" 
+                      ? 
+                        <input type="checkbox" checked={checks[i]?.active} onChange={()=>onChange(row.getVisibleCells()[0].getValue() as number)}/>
+                      :
+                        flexRender(cell.column.columnDef.cell, cell.getContext())
+                    }
                   </TableCell>
                 ))}
               </TableRow>

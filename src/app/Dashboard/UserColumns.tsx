@@ -1,7 +1,7 @@
 "use client"
 import {ColumnDef} from "@tanstack/react-table";
-import { User } from "./page";
-export const UserColumns:ColumnDef<User>[] = [
+import { StudentInfoDTO } from "@/utils/models/StudentInfoDTO";
+export const UserColumns:ColumnDef<StudentInfoDTO>[] = [
     {
         accessorKey: "id",
         header: "id"
@@ -19,7 +19,7 @@ export const UserColumns:ColumnDef<User>[] = [
         header: "Last Name"
     },
     {
-        accessorKey: "isActive",
+        accessorKey: "active",
         header: "Active"
     },
 ]
