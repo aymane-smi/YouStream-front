@@ -49,7 +49,7 @@ export default function CreateStream(){
         const {data} = await mutation.mutateAsync(tags);
         console.log(data.streamToken);
         await navigator.clipboard.writeText(data?.streamToken);
-        handleToast("stream created and the clipboard contain the stream id", "success");
+        handleToast("stream created and the clipboard contain the stream id", "success", data.stream.id as number);
     }
     const onEmpty = ()=>{
         setTags([]);
@@ -64,13 +64,13 @@ export default function CreateStream(){
         setRefreshLoading(false);
     }
 
-    const handleToast = (message: string, type: string)=>{
+    const handleToast = (message: string, type: string, id:number)=>{
         if(type === "error")
             toast.error(message);
         else if(type === "success")
             toast.success(message, {
                 onClose: ()=>{
-                    router.push("/myStreams")
+                    router.push(`/stream/${id}`);
                 }
             });
     }

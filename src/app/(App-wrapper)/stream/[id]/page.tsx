@@ -27,8 +27,9 @@ export default function StreamId(){
             setDisabled(true);
         }
     });
+    console.log(data);
     return <main className="w-full">
-        <ReactPlayer url="http://sample.vodobox.net/skate_phantom_flex_4k/skate_phantom_flex_4k.m3u8"
+        <ReactPlayer url={`http://localhost:8081/hls/${data?.data.file_name}.m3u8`}
                      playing={false}
                      controls
                      width="100%"
@@ -49,7 +50,7 @@ export default function StreamId(){
             </div>
             <div className="flex flex-col justify-center items-center">
                 <div className="flex justify-center items-center gap-2">
-                    <button className="rounded-md p-2 font-semibold bg-[#9645FE] flex gap-2 justify-center items-center" onClick={()=>followMutation.mutate({
+                    <button className={`rounded-md p-2 font-semibold bg-[#9645FE] flex gap-2 justify-center items-center ${disabled && "cursor-not-allowed"}`} onClick={()=>followMutation.mutate({
                         streamerId: data?.data.owner.id
                     })} disabled={disabled}>
                         <IoPersonOutline size={20}/>

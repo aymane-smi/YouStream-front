@@ -9,9 +9,11 @@ import apis from "@/utils/API";
 import { useMutation } from "react-query";
 import { useState } from "react";
 import {ScaleLoader} from "react-spinners";
+import { useAuthStore } from "@/utils/store/user";
 
 export const LoginButton = ()=>{
     const {auth} = apis;
+    const logged = useAuthStore((state)=>state.setLoggedStatus);
     const [message, setMessage] = useState<string>("");
     const [open, setOpen] = useState<boolean>(false);
     const signinMutation = useMutation(auth.signIn, {
@@ -21,6 +23,7 @@ export const LoginButton = ()=>{
             localStorage.setItem("token", data.data.token)
             localStorage.setItem("refresh_token", data.data.refresh_token);
             localStorage.setItem("id", data.data.id);
+            logged();
         },
         onError: (error:Error)=>{
             setMessage("bad credentiels");

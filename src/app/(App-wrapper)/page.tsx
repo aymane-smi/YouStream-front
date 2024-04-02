@@ -12,6 +12,7 @@ import {v4 as uuidv4} from "uuid";
 import Avatar from "react-nice-avatar";
 import { StreamTopDTO } from '@/utils/models/StreamTopDTO'
 import Link from 'next/link'
+import { Badge } from '@/components/ui/badge'
 config.autoAddCss = false
 
 export default function Home() {
@@ -55,7 +56,7 @@ export default function Home() {
         </p>
         <div className='flex justify-start items-center gap-3 flex-wrap'>
           {data && streams?.map((stream)=><div className='flex flex-col justify-start items-center gap-3' key={uuidv4()} ref={lastElementRef}>
-            <ReactPlayer url="http://sample.vodobox.net/skate_phantom_flex_4k/skate_phantom_flex_4k.m3u8"
+            <ReactPlayer url={stream.file_name == null ? "http://localhost:8081/skate_phantom_flex_4k/skate_phantom_flex_4k.m3u8" : `http://localhost:8081/hls/${stream.file_name}.m3u8`}
                          light
                          playing={false}
                          controls
@@ -63,16 +64,14 @@ export default function Home() {
                          width={300}
                          height={150}
               />
-            <div className='flex justify-start gap-3 items-center w-full'>
-              <Link href={`/student/${localStorage.getItem("id")}`}>
-                <Avatar className="w-[40px] h-[40px] rounded-[50%]" {...config}/>
-              </Link>
+            <Link href={`/stream/${stream.id}`} className='flex justify-start gap-3 items-center w-full'>
+              <Avatar className="w-[40px] h-[40px] rounded-[50%]" {...config}/>
               <div className='w-full flex flex-col gap-3'>
                 <p className='w-full h-[10px]'>Streamed by:{stream.username}</p>
-                <div className='w-full'>list of tags</div>
               </div>
+              </Link>
             </div>
-          </div>)}
+          )}
         </div>
         <div className='flex justify-start items-center gap-3 flex-wrap'>
           {(isLoading || isFetching) && [1,2,3,4].map((i)=><div className='flex flex-col justify-start items-center gap-3' key={uuidv4()}>

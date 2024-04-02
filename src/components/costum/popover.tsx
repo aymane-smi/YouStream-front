@@ -14,11 +14,13 @@ import { log } from "console";
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import Link from "next/link";
+import { useAuthStore } from "@/utils/store/user";
 
 export function PopOver() {
     const [value, setValue] = useState<boolean>(false);
     const [close, setClose] = useState<boolean>(false);
     const {setTheme, theme} = useTheme();
+    const logged = useAuthStore((state)=>state.setEmptyLoggedSttaus);
     useEffect(()=>{
         if(value)
             setTheme("light");
@@ -31,6 +33,7 @@ export function PopOver() {
       localStorage.removeItem("refresh_token");
       localStorage.removeItem("role");
       setClose(false);
+      logged();
     }
   return (
     <Popover open={close} onOpenChange={setClose}>
