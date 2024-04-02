@@ -14,6 +14,7 @@ import { v4 as uuidv4 } from "uuid";
 export default function StreamId(){
     const {id} = useParams<{id: string}>();
     const [disabled, setDisabled] = useState<boolean>(false);
+    const [followed, setFollowed] = useState<boolean>(false);
     const {data, isLoading, } = useQuery("getStreamById", {
         queryFn: ()=>apis.stream.getStreamById(Number.parseInt(id))
     });
@@ -21,13 +22,23 @@ export default function StreamId(){
     useEffect(()=>{
         if(loggedId == data?.data.owner?.id)
             setDisabled(true);
+        if(isSubscribed(Number.parseInt(localStorage.getItem("id") as string)))
+            setFollowed(true);
+        else
+            setFollowed(false);
     }, [data]);
     const followMutation = useMutation("follow", apis.student.subscribe, {
         onSuccess: (data)=>{
             setDisabled(true);
+            if(followed)
+                setFollowed(false);
+            else
+                setFollowed(true);
         }
     });
-    console.log(data);
+    const isSubscribed = (id:number)=>{
+        return data?.data?.subscribers?.findIndex((item)=>item.id === id) === -1 ? false : true;
+    }
     return <main className="w-full">
         <ReactPlayer url={`http://localhost:8081/hls/${data?.data.file_name}.m3u8`}
                      playing={false}
@@ -49,13 +60,20 @@ export default function StreamId(){
                 </div>
             </div>
             <div className="flex flex-col justify-center items-center">
-                <div className="flex justify-center items-center gap-2">
-                    <button className={`rounded-md p-2 font-semibold bg-[#9645FE] flex gap-2 justify-center items-center ${disabled && "cursor-not-allowed"}`} onClick={()=>followMutation.mutate({
-                        streamerId: data?.data.owner.id
-                    })} disabled={disabled}>
-                        <IoPersonOutline size={20}/>
-                        <span>Follow</span>
-                    </button>
+                <div className="flex justify-center items-center gap-2">{
+                    !followed ? <button className={`rounded-md p-2 font-semibold bg-[#9645FE] flex gap-2 justify-center items-center ${disabled && "cursor-not-allowed"}`} onClick={()=>followMutation.mutate({
+                            streamerId: data?.data.owner.id
+                        })} disabled={disabled}>
+                            <IoPersonOutline size={20}/>
+                            <span>Follow</span>
+                        </button> :
+                        <button className={`rounded-md p-2 font-semibold bg-[#9645FE] flex gap-2 justify-center items-center`} onClick={()=>followMutation.mutate({
+                            streamerId: data?.data.owner.id
+                        })} disabled={disabled}>
+                            <IoPersonOutline size={20}/>
+                            <span>Unfollow</span>
+                        </button>
+                    }
                     <button className={`rounded-md p-2 font-semibold bg-[#1F1F23] flex gap-2 justify-center items-center ${disabled && "cursor-not-allowed"}`}>
                         <MdOutlineReportGmailerrorred size={20}/>
                         <span>Report stream</span>

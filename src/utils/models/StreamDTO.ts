@@ -1,3 +1,4 @@
+import { StudentInfoDTO } from "./StudentInfoDTO";
 import { TagDTO } from "./TagDTO";
 
 export interface StreamDTO{
@@ -7,5 +8,6 @@ export interface StreamDTO{
     file_name: string,
     tags: TagDTO[],
     student: any,
-    owner: any
+    owner: any;
+    subscribers: StudentInfoDTO
 }
